@@ -1,0 +1,38 @@
+{
+  "name": "@johnr1sh/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@johnr1sh/lib": "workspace:*",
+    "@johnr1sh/ui": "workspace:*",
+    "@sentry/nextjs": "^8.0.0",
+    "@supabase/supabase-js": "^2.43.0",
+    "@trpc/client": "^10.45.2",
+    "@trpc/next": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "@tanstack/react-query": "^5.40.0",
+    "next": "15.3.0",
+    "posthog-js": "^1.140.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "superjson": "^2.2.1",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.0"
+  }
+}

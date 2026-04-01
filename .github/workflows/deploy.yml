@@ -1,0 +1,53 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "9"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build project artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Notify Sentry of new release
+        if: success()
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        run: |
+          npx @sentry/cli releases new ${{ github.sha }}
+          npx @sentry/cli releases set-commits ${{ github.sha }} --auto
+          npx @sentry/cli releases finalize ${{ github.sha }}

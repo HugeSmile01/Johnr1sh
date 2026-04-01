@@ -1,0 +1,36 @@
+{
+  "name": "johnr1sh-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Secure Mobile-First AI Copilot Monorepo",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --parallel -r dev",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "type-check": "pnpm -r type-check",
+    "db:generate": "pnpm --filter db prisma generate",
+    "db:migrate": "pnpm --filter db prisma migrate dev",
+    "db:push": "pnpm --filter db prisma db push",
+    "db:seed": "pnpm --filter db ts-node seed.ts",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.2.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

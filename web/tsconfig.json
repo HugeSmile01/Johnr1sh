@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "incremental": true,
+    "outDir": ".next",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./*"],
+      "@johnr1sh/lib/*": ["../lib/*"],
+      "@johnr1sh/ui": ["../ui/index.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
