@@ -1,0 +1,13 @@
+{
+  "name": "@johnr1sh/ui",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  supabase-db:
+    image: supabase/postgres:15.1.1.59
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: postgres
+    volumes:
+      - supabase-db-data:/var/lib/postgresql/data
+      - ./supabase-init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  supabase-studio:
+    image: supabase/studio:latest
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    depends_on:
+      - supabase-db
+    environment:
+      STUDIO_PG_META_URL: http://supabase-db:5432
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+
+volumes:
+  supabase-db-data:
+  redis-data:
