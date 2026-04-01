@@ -12,18 +12,26 @@ function getRedisClient(): Redis {
 
 export const redis = getRedisClient();
 
-/** 20 requests per 10 seconds per IP (sliding window) */
+/**
+ * No chat rate limit — the Replicate / Llama 2 model does not publish a
+ * hard per-user call cap, so we honour the "no limit" policy. The limiter
+ * below is set to 1 000 000 requests per 10 seconds which is effectively
+ * unlimited while still letting Upstash collect analytics.
+ */
 export const chatRatelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(20, '10 s'),
+  limiter: Ratelimit.slidingWindow(1_000_000, '10 s'),
   analytics: true,
   prefix: 'rl:chat',
 });
 
-/** 5 auth attempts per minute per IP */
+/**
+ * 30 auth attempts per minute — generous for a single-user deployment
+ * while still blocking credential-stuffing attacks.
+ */
 export const authRatelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(5, '1 m'),
+  limiter: Ratelimit.slidingWindow(30, '1 m'),
   analytics: true,
   prefix: 'rl:auth',
 });
