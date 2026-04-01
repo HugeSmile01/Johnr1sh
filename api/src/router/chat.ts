@@ -55,7 +55,14 @@ export const chatRouter = router({
 
       // Call AI
       const aiContent = await sendChatMessage([
-        { role: 'system', content: 'You are Johnr1sh Copilot, a helpful AI assistant.' },
+        {
+          role: 'system',
+          content:
+            'You are Johnr1sh Copilot, a helpful AI assistant specialized in software development. ' +
+            'You have access to GitHub repository and code management tools — you can help list ' +
+            'repositories, browse branches, read file contents, review commits, create and update ' +
+            'files, manage branches, and search code. Always write clean, well-documented code.',
+        },
         ...history,
         { role: 'user', content: sanitized },
       ]);

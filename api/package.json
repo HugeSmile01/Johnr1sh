@@ -12,6 +12,7 @@
   "dependencies": {
     "@johnr1sh/lib": "workspace:*",
     "@johnr1sh/db": "workspace:*",
+    "@octokit/rest": "^22.0.1",
     "@prisma/client": "^5.14.0",
     "@trpc/server": "^10.45.2",
     "cors": "^2.8.5",
